@@ -2,15 +2,17 @@ import java.util.Arrays;
 
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
+    Integer SizeResume = 0;
 
     void clear() {
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, SizeResume, null);
     }
 
     void save(Resume r) {
         for (int i = 0; i < storage.length; i++) {
             if (storage[i] == null) {
                 storage[i] = r;
+                SizeResume ++;
                 break;
             }
         }
@@ -31,6 +33,7 @@ public class ArrayStorage {
                 for (int j = i; j < storage.length && storage[j] != null; j++) {
                     storage[j] = storage[j + 1];
                 }
+                SizeResume --;
             }
         }
     }
@@ -38,6 +41,7 @@ public class ArrayStorage {
     Resume[] getAll() {
         for (int i = 0; i < storage.length; i++) {
             if (storage[i] == null) {
+                SizeResume = i;
                 return Arrays.copyOf(storage, i);
             }
         }
@@ -45,12 +49,7 @@ public class ArrayStorage {
     }
 
     int size() {
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i] == null) {
-                return i;
-            }
-        }
-        return 0;
+        return SizeResume;
     }
 }
 
