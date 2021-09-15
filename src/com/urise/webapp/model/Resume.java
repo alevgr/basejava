@@ -20,4 +20,12 @@ public class Resume {
     public String toString() {
         return uuid;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Resume) {
+            return 0 == this.uuid.compareTo(((Resume) obj).uuid);
+        }
+        return false;
+    }
 }
