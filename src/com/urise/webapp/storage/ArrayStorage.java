@@ -2,14 +2,13 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class ArrayStorage {
     Resume[] storage = new Resume[10_000];
     private int countResume = 0;
 
-    private int getIndexByUid(String uuid) {
+    private int getIndex(String uuid) {
         for (int i = 0; i < countResume; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
@@ -24,18 +23,16 @@ public class ArrayStorage {
     }
 
     public void update(Resume r) {
-        int index = getIndexByUid(r.getUuid());
+        int index = getIndex(r.getUuid());
         if (index < 0) {
             System.out.println("Не могу обновить резюме " + r.getUuid() + " резюме с таким UID не существует!");
             return;
         }
-        Resume buf = new Resume();
-        buf.setUuid(r.getUuid());
-        this.storage[index] = buf;
+        storage[index] = r;
     }
 
     public void save(Resume r) {
-        int index = getIndexByUid(r.getUuid());
+        int index = getIndex(r.getUuid());
         if (index != -1) {
             System.out.println("Не могу добавить резюме - резюме с таким UID уже существует!");
         } else {
@@ -49,17 +46,16 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int index = getIndexByUid(uuid);
+        int index = getIndex(uuid);
         if (index < 0) {
             System.out.println("Не могу найти резюме " + uuid + " - нет в списке!");
             return null;
-        } else {
-            return this.storage[index];
         }
+        return storage[index];
     }
 
     public void delete(String uuid) {
-        int index = getIndexByUid(uuid);
+        int index = getIndex(uuid);
         if (index < 0) {
             System.out.println("Не могу найти резюме " + uuid + " - нет в списке!");
         } else {
