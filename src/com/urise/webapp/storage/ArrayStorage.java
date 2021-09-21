@@ -34,14 +34,12 @@ public class ArrayStorage {
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (index != -1) {
-            System.out.println("Не могу добавить резюме - резюме с таким UID уже существует!");
+            System.out.println("Не могу добавить резюме - резюме " + r.getUuid() + " уже существует!");
+        } else if (countResume < storage.length) {
+            storage[countResume] = r;
+            countResume++;
         } else {
-            if (countResume < storage.length) {
-                storage[countResume] = r;
-                countResume++;
-            } else {
-                System.out.println("Не могу добавить резюме - список переполнен!");
-            }
+            System.out.println("Не могу добавить резюме - список переполнен!");
         }
     }
 
