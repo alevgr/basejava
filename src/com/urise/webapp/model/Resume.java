@@ -1,5 +1,7 @@
 package com.urise.webapp.model;
 
+import java.util.Objects;
+
 /**
  * Initial resume class
  */
@@ -21,11 +23,19 @@ public class Resume {
         return uuid;
     }
 
+
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Resume) {
-            return 0 == this.uuid.compareTo(((Resume) obj).uuid);
-        }
-        return false;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Resume r = (Resume) obj;
+
+        return uuid.equals((r).uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return uuid.hashCode();
     }
 }
