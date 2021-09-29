@@ -4,12 +4,10 @@ import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public class ArrayStorage {
-    Resume[] storage = new Resume[10_000];
-    private int countResume = 0;
+public class ArrayStorage extends AbstractArrayStorage {
 
-    private int getIndex(String uuid) {
-        for (int i = 0; i < countResume; i++) {
+    protected int getIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
@@ -17,9 +15,19 @@ public class ArrayStorage {
         return -1;
     }
 
-    public void clear() {
-        Arrays.fill(storage, 0, countResume, null);
-        countResume = 0;
+    public Resume[] getAll() {
+        return Arrays.copyOf(storage, size);
+    }
+
+    public void save(Resume r) {
+        if (getIndex(r.getUuid()) != -1) {
+            System.out.println("Не могу добавить резюме - резюме " + r.getUuid() + " уже существует!");
+        } else if (size < storage.length) {
+            storage[size] = r;
+            size++;
+        } else {
+            System.out.println("Не могу добавить резюме - список переполнен!");
+        }
     }
 
     public void update(Resume r) {
@@ -31,43 +39,20 @@ public class ArrayStorage {
         storage[index] = r;
     }
 
-    public void save(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index != -1) {
-            System.out.println("Не могу добавить резюме - резюме " + r.getUuid() + " уже существует!");
-        } else if (countResume < storage.length) {
-            storage[countResume] = r;
-            countResume++;
-        } else {
-            System.out.println("Не могу добавить резюме - список переполнен!");
-        }
-    }
-
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            System.out.println("Не могу найти резюме " + uuid + " - нет в списке!");
-            return null;
-        }
-        return storage[index];
-    }
-
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
             System.out.println("Не могу найти резюме " + uuid + " - нет в списке!");
         } else {
-            System.arraycopy(storage, index + 1, storage, index, countResume - index - 1);
-            countResume--;
+            System.arraycopy(storage, index + 1, storage, index, size - index - 1);
+            size--;
         }
     }
 
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, countResume);
+    public void clear() {
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
     }
 
-    public int size() {
-        return countResume;
-    }
 }
 
