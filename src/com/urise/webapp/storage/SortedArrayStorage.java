@@ -14,30 +14,14 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void update(Resume r) {
-
+    protected void fillResume(int index, Resume r) {
+        index = -index - 1;
+        System.arraycopy(storage, index, storage, index + 1, size - index);
+        storage[index] = r;
     }
 
     @Override
-    public void save(Resume r) {
-        int j = Arrays.binarySearch(storage, 0, size, r);
-        if (j >= 0) {
-            System.out.println("Такое значение уже есть в Storage!");
-            return;
-        }
-        j = -j - 1;
-        System.arraycopy(storage, j, storage, j + 1, size - j);
-        storage[j] = r;
-        size++;
-    }
-
-    @Override
-    public void delete(String uuid) {
-
-    }
-
-    @Override
-    public void clear() {
-
+    protected void deleteResume(int index) {
+        System.arraycopy(storage, index + 1, storage, index, size - 1);
     }
 }
