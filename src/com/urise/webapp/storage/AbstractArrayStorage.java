@@ -28,8 +28,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             System.out.println("Не могу добавить резюме - резюме " + r.getUuid() + " уже существует!");
         } else if (size < storage.length) {
-
-            fillElement(index, r);
+            fillResume(index, r);
             size++;
         } else {
             System.out.println("Не могу добавить резюме - список переполнен!");
@@ -50,17 +49,16 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index < 0) {
             System.out.println("Не могу найти резюме " + uuid + " - нет в списке!");
         } else {
-
-            deleteElement(index, uuid);
+            deleteResume(index);
             size--;
         }
     }
 
     protected abstract int getIndex(String uuid);
 
-    protected abstract void fillElement(int index, Resume r);
+    protected abstract void fillResume(int index, Resume r);
 
-    protected abstract void deleteElement(int index, String uuid);
+    protected abstract void deleteResume(int index);
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
