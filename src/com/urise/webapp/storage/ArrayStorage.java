@@ -21,7 +21,8 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void deleteResume(int index) {
-        System.arraycopy(storage, index + 1, storage, index, size - index - 1);
+        storage[index] = storage[storage.length - 1];
+        storage[storage.length - 1] = null;
     }
 }
 
