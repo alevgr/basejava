@@ -1,11 +1,14 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
 
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 1_000;
+    protected static final int STORAGE_LIMIT = 4;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
@@ -17,8 +20,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Не могу найти резюме " + uuid + " - нет в списке!");
-            return null;
+            throw new NotExistStorageException(uuid);
         }
         return storage[index];
     }
@@ -26,20 +28,19 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (index >= 0) {
-            System.out.println("Не могу добавить резюме - резюме " + r.getUuid() + " уже существует!");
+            throw new ExistStorageException(r.getUuid());
         } else if (size < storage.length) {
             fillResume(index, r);
             size++;
         } else {
-            System.out.println("Не могу добавить резюме - список переполнен!");
+            throw new StorageException("Storage owerflow!", r.getUuid());
         }
     }
 
     public void update(Resume r) {
         int index = getIndex(r.getUuid());
         if (index < 0) {
-            System.out.println("Не могу обновить резюме " + r.getUuid() + " резюме с таким UID не существует!");
-            return;
+            throw new NotExistStorageException(r.getUuid());
         }
         storage[index] = r;
     }
@@ -47,7 +48,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Не могу найти резюме " + uuid + " - нет в списке!");
+            throw new NotExistStorageException(uuid);
         } else {
             deleteResume(index);
             size--;
