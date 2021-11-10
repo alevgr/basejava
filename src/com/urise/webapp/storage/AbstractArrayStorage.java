@@ -29,7 +29,8 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = getIndex(r.getUuid());
         if (index >= 0) {
             throw new ExistStorageException(r.getUuid());
-        } else if (size < storage.length) {
+        }
+        if (size < storage.length) {
             fillResume(index, r);
             size++;
         } else {
@@ -47,12 +48,12 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
+
         if (index < 0) {
             throw new NotExistStorageException(uuid);
-        } else {
-            deleteResume(index);
-            size--;
         }
+        deleteResume(index);
+        size--;
     }
 
     protected abstract int getIndex(String uuid);
