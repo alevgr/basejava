@@ -10,9 +10,6 @@ import org.junit.Test;
 
 public abstract class AbstractArrayStorageTest {
 
-    // в тестах проверяйте Resume целиком, а не их uuid
-
-
     protected Storage storage;
 
     protected static final String UUID_1 = "uuid1";
@@ -54,7 +51,7 @@ public abstract class AbstractArrayStorageTest {
         Assert.assertEquals(3, storage.size());
         storage.save(r);
         Assert.assertEquals(4, storage.size());
-        Assert.assertEquals(r.getUuid(), storage.get(r.getUuid()).toString());
+        Assert.assertSame(r, storage.get(r.getUuid()));
     }
 
     @Test(expected = StorageException.class)
@@ -75,25 +72,13 @@ public abstract class AbstractArrayStorageTest {
     public void saveAlreadyExist() {
         Resume r = new Resume(UUID_1);
         storage.save(r);
-        r = new Resume(UUID_2);
-        storage.save(r);
-        r = new Resume(UUID_3);
-        storage.save(r);
     }
 
     @Test
     public void update() {
         Resume r = new Resume(UUID_1);
         storage.update(r);
-        Assert.assertEquals(r.hashCode(), storage.get(UUID_1).hashCode());
-
-        r = new Resume(UUID_2);
-        storage.update(r);
-        Assert.assertEquals(r.hashCode(), storage.get(UUID_2).hashCode());
-
-        r = new Resume(UUID_3);
-        storage.update(r);
-        Assert.assertEquals(r.hashCode(), storage.get(UUID_3).hashCode());
+        Assert.assertSame(r, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
