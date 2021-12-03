@@ -8,8 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 public abstract class AbstractArrayStorageTest {
 
@@ -24,7 +23,8 @@ public abstract class AbstractArrayStorageTest {
     private static final Resume RESUME2 = new Resume(UUID_2);
     private static final Resume RESUME3 = new Resume(UUID_3);
     private static final Resume RESUME4 = new Resume(UUID_4);
-
+    private static final Resume[] RESUMES = {RESUME1, RESUME2, RESUME3};
+    
     public AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
@@ -117,10 +117,6 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void getAll() {
-        Resume[] Res = storage.getAll();
-        assertEquals(3, Res.length);
-        assertEquals(RESUME1, Res[0]);
-        assertEquals(RESUME2, Res[1]);
-        assertEquals(RESUME3, Res[2]);
+        assertArrayEquals(RESUMES, storage.getAll());
     }
 }
