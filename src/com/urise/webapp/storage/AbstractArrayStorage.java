@@ -1,13 +1,11 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10_000;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -17,42 +15,29 @@ public abstract class AbstractArrayStorage implements Storage {
         return size;
     }
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        return storage[index];
+    @Override
+    protected Resume doGet(Object searchKey) {
+        return storage[(int) searchKey];
     }
 
-    public void save(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        }
+    @Override
+    protected void doSave(Resume r, Object searchKey) {
         if (size < storage.length) {
-            fillResume(index, r);
+            fillResume((int) searchKey, r);
             size++;
         } else {
             throw new StorageException("Storage owerflow!", r.getUuid());
         }
     }
 
-    public void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(r.getUuid());
-        }
-        storage[index] = r;
+    @Override
+    protected void doUpdate(Resume r, Object searchKey) {
+        storage[(int) searchKey] = r;
     }
 
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        deleteResume(index);
+    @Override
+    protected void doDelete(Object searchKey) {
+        deleteResume((int) searchKey);
         size--;
     }
 
@@ -61,6 +46,10 @@ public abstract class AbstractArrayStorage implements Storage {
     protected abstract void fillResume(int index, Resume r);
 
     protected abstract void deleteResume(int index);
+
+    protected abstract Integer getSearchKey(String uuid);
+
+    protected abstract boolean isExist(Object index);
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);

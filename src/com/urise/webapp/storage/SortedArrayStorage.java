@@ -2,6 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.net.Inet4Address;
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
@@ -26,5 +27,15 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         } else {
             System.arraycopy(storage, index + 1, storage, index, size - 1);
         }
+    }
+
+    @Override
+    protected Integer getSearchKey(String uuid) {
+        return getIndex(uuid);
+    }
+
+    @Override
+    protected boolean isExist(Object index) {
+        return (Integer)index >= 0;
     }
 }

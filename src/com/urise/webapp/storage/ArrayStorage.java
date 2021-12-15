@@ -24,5 +24,15 @@ public class ArrayStorage extends AbstractArrayStorage {
         storage[index] = storage[size - 1];
         storage[size - 1] = null;
     }
+
+    @Override
+    protected Integer getSearchKey(String uuid) {
+        return getIndex(uuid);
+    }
+
+    @Override
+    protected boolean isExist(Object Index) {
+        return (Integer) Index >= 0;
+    }
 }
 
