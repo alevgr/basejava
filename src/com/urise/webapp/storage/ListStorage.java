@@ -3,10 +3,11 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListStorage extends AbstractStorage {
 
-    ArrayList<Resume> storage = new ArrayList<>();
+    private List<Resume> storage = new ArrayList<>(); //уточнить
 
     @Override
     protected Resume doGet(Object searchKey) {
@@ -29,11 +30,6 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        return (int) searchKey >= 0;
-    }
-
-    @Override
     protected Object getSearchKey(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (storage.get(i).getUuid().equals(uuid)) {
@@ -45,7 +41,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public Resume[] getAll() {
-        return storage.toArray(new Resume[storage.size()]);
+        return storage.toArray(new Resume[storage.size()]); // варнинг
     }
 
     @Override
