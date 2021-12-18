@@ -1,5 +1,7 @@
 package com.urise.webapp.storage;
+
 import com.urise.webapp.model.Resume;
+
 import java.util.*;
 
 public class MainCollections {
@@ -37,7 +39,6 @@ public class MainCollections {
             }
         }
         System.out.println(collection.toString());
-
 
         Map<String, Resume> map = new HashMap<>();
         map.put(UUID_1, RESUME_1);

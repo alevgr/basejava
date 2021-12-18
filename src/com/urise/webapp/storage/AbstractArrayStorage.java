@@ -38,18 +38,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     protected void doDelete(Object searchKey) {
         deleteResume((int) searchKey);
+        storage[size - 1] = null;
         size--;
     }
-
-    protected abstract int getIndex(String uuid);
-
-    protected abstract void fillResume(int index, Resume r);
-
-    protected abstract void deleteResume(int index);
-
-    protected abstract Integer getSearchKey(String uuid);
-
-    protected abstract boolean isExist(Object index);
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -59,5 +50,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
+
+    protected abstract void fillResume(int index, Resume r);
+
+    protected abstract void deleteResume(int index);
+
+    protected abstract Integer getSearchKey(String uuid);
 }
 
