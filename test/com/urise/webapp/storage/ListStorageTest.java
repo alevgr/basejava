@@ -12,7 +12,7 @@ public class ListStorageTest extends AbstractArrayStorageTest {
     @Override
     @Ignore
     @Test
-     // только теперь во вкладке run над всем тестом "ListStorageTest" висит метка "Test ignored." - это так и должно быть?
+    // только теперь во вкладке run над всем тестом "ListStorageTest" висит метка "Test ignored." - это так и должно быть?
     public void saveOverflow() {
     }
 }

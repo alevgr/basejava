@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ListStorage extends AbstractStorage {
 
-    private List<Resume> storage = new ArrayList<>(); //уточнить
+    private List<Resume> storage = new ArrayList<>();
 
     @Override
     protected Resume doGet(Object searchKey) {
