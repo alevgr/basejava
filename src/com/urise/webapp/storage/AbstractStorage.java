@@ -22,7 +22,7 @@ public abstract class AbstractStorage implements Storage {
     // обновление тоже уникально - вынесем в отдельный метод doUpdate... итд
 
     protected boolean isExist(Object searchKey) {
-        return (int) searchKey >= 0;
+        return (Integer) searchKey >= 0;
     }
 
     public Resume get(String uuid) {
