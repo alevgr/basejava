@@ -9,6 +9,10 @@ public class ListStorage extends AbstractStorage {
 
     private List<Resume> storage = new ArrayList<>();
 
+    protected boolean isExist(Object searchKey) {
+        return (Integer) searchKey >= 0;
+    }
+
     @Override
     protected Resume doGet(Object searchKey) {
         return storage.get((int) searchKey);

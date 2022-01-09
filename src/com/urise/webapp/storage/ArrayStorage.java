@@ -4,6 +4,10 @@ import com.urise.webapp.model.Resume;
 
 public class ArrayStorage extends AbstractArrayStorage {
 
+    protected boolean isExist(Object searchKey) {
+        return (Integer) searchKey >= 0;
+    }
+
     @Override
     protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < size; i++) {

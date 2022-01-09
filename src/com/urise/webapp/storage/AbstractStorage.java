@@ -17,13 +17,10 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Object getSearchKey(String uuid);
 
+    protected abstract boolean isExist(Object searchKey);
     // для array нужен индекс, для map нужен ключ. Сделать функцию getSerchKey для поиска колюча и переопределять её в потомках
     // проверка на существование в массиве или в листе уникальные, по этому создадим местод getSearchKey вместо getIndex а в дальнейшем его переопределим
     // обновление тоже уникально - вынесем в отдельный метод doUpdate... итд
-
-    protected boolean isExist(Object searchKey) {
-        return (Integer) searchKey >= 0;
-    }
 
     public Resume get(String uuid) {
         Object searchKey = getSearchKeyIfResumeExist(uuid);
