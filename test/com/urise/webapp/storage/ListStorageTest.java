@@ -9,8 +9,4 @@ public class ListStorageTest extends AbstractStorageTest {
         super(new ListStorage());
     }
 
-    @Test
-    // только теперь во вкладке run над всем тестом "ListStorageTest" висит метка "Test ignored." - это так и должно быть?
-    public void saveOverflow() {
-    }
 }

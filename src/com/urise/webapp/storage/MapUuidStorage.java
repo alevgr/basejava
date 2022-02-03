@@ -33,15 +33,13 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getSearchKey(String uuid, String fullName) {
+    protected Object getSearchKey(String uuid) {
         return storage.containsKey(uuid) ? uuid : null;
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> al = new ArrayList<Resume>(storage.values());
-        Collections.sort(al);
-        return al;
+    protected List<Resume> doCopy() {
+        return new ArrayList<Resume>(storage.values());
     }
 
     @Override

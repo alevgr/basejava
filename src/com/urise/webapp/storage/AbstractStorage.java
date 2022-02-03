@@ -4,6 +4,10 @@ import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public abstract class AbstractStorage implements Storage {
 
     // тут будет уникальная реализация в потомках
@@ -15,7 +19,9 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void doDelete(Object searchKey);
 
-    protected abstract Object getSearchKey(String uuid, String fullName);
+    protected abstract Object getSearchKey(String uuid);
+
+    protected abstract List<Resume> doCopy();
 
     protected abstract boolean isExist(Object searchKey);
     // для array нужен индекс, для map нужен ключ. Сделать функцию getSerchKey для поиска колюча и переопределять её в потомках
@@ -43,7 +49,7 @@ public abstract class AbstractStorage implements Storage {
     }
 
     private Object getSearchKeyIfResumeExist(String uuid) {
-        Object searchKey = getSearchKey(uuid,"dummy");
+        Object searchKey = getSearchKey(uuid);
         if (!isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
@@ -51,10 +57,17 @@ public abstract class AbstractStorage implements Storage {
     }
 
     private Object getSearchKeyIfResumeNotExist(String uuid) {
-        Object searchKey = getSearchKey(uuid,"dummy");
+        Object searchKey = getSearchKey(uuid);
         if (isExist(searchKey)) {
             throw new ExistStorageException(uuid);
         }
         return searchKey;
+    }
+
+    public List<Resume> getAllSorted()
+    {
+        List<Resume> al = doCopy();
+        Collections.sort(al);
+        return al;
     }
 }

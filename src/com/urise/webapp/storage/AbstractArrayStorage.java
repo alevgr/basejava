@@ -58,6 +58,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract void deleteResume(int index);
 
-    protected abstract Integer getSearchKey(String uuid, String fullName);
-}
+    protected abstract Integer getSearchKey(String uuid);
 
+    protected boolean isExist(Object searchKey) {
+        return (Integer) searchKey >= 0;
+    }
+}

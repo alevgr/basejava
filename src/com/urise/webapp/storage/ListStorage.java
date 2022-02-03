@@ -34,13 +34,18 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getSearchKey(String uuid, String fullName) {
+    protected Object getSearchKey(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (storage.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }
         return -1;
+    }
+
+    @Override
+    protected List<Resume> doCopy() {
+        return storage;
     }
 
     @Override
