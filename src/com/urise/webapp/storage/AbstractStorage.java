@@ -15,7 +15,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void doDelete(Object searchKey);
 
-    protected abstract Object getSearchKey(String uuid);
+    protected abstract Object getSearchKey(String uuid, String fullName);
 
     protected abstract boolean isExist(Object searchKey);
     // для array нужен индекс, для map нужен ключ. Сделать функцию getSerchKey для поиска колюча и переопределять её в потомках
@@ -43,7 +43,7 @@ public abstract class AbstractStorage implements Storage {
     }
 
     private Object getSearchKeyIfResumeExist(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+        Object searchKey = getSearchKey(uuid,"dummy");
         if (!isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
@@ -51,7 +51,7 @@ public abstract class AbstractStorage implements Storage {
     }
 
     private Object getSearchKeyIfResumeNotExist(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+        Object searchKey = getSearchKey(uuid,"dummy");
         if (isExist(searchKey)) {
             throw new ExistStorageException(uuid);
         }
