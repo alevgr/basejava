@@ -64,10 +64,9 @@ public abstract class AbstractStorage implements Storage {
         return searchKey;
     }
 
-    public List<Resume> getAllSorted()
-    {
-        List<Resume> al = doCopy();
-        Collections.sort(al);
-        return al;
+    public List<Resume> getAllSorted() {
+        List<Resume> sortedList = doCopy();
+        sortedList.sort(null);
+        return sortedList;
     }
 }

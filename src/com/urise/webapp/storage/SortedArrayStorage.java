@@ -18,11 +18,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected List<Resume> doCopy() {
-        return new ArrayList<Resume>(Arrays.asList(storage));
-    }
-
-    @Override
     protected void fillResume(int index, Resume r) {
         index = -index - 1;
         System.arraycopy(storage, index, storage, index + 1, size - index);

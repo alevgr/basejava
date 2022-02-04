@@ -3,6 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,6 +60,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected abstract void deleteResume(int index);
 
     protected abstract Integer getSearchKey(String uuid);
+
+    @Override
+    protected List<Resume> doCopy() {
+        return new ArrayList<Resume>(Arrays.asList(storage));
+    }
 
     protected boolean isExist(Object searchKey) {
         return (Integer) searchKey >= 0;
